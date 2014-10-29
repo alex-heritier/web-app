@@ -16,17 +16,12 @@ html, body {
     padding: 0;
 }
 
-.fill {
-    height: 100%;
+.navbar.navbar-inverse {
+    border-radius: 0;
+    margin-bottom: 0;
 }
 
 #map_canvas {
-    margin-top: -21px;
     height: 100%;
     width: 100%;
 }
-
-#map_canvas {
-    cursor: default;
-}
-
