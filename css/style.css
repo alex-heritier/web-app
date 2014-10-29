@@ -7,9 +7,10 @@
 html, body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
-.main {
+.map_container {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -19,9 +20,38 @@ html, body {
 .navbar.navbar-inverse {
     border-radius: 0;
     margin-bottom: 0;
+    border-bottom: 1px solid black;
 }
 
 #map_canvas {
     height: 100%;
     width: 100%;
+}
+
+.about_container {
+    position: absolute;
+    top: 50px;
+    height: 100%;
+    left: -500px;
+    width: 25%;
+    background-color: #222;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    opacity: 0;
+    transition: left 0.3s linear, opacity 0.3s linear;
+}
+
+.about_container .about_title {
+    padding: 10px;
+    text-align: center;
+    font-size: 3rem;
+    color: #999;
+}
+
+.about_container .about_content {
+    font-size: 1.6rem;
+    color: #222;
+    background-color: #777;
+    padding: 8px;
+    border-radius: 5px;
 }
