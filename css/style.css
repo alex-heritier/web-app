@@ -28,7 +28,7 @@ html, body {
     width: 100%;
 }
 
-.about_container {
+.sidebar {
     position: absolute;
     top: 50px;
     height: 100%;
@@ -39,19 +39,16 @@ html, body {
     border-top: 1px solid black;
     opacity: 0;
     transition: left 0.3s linear, opacity 0.3s linear;
-}
-
-.about_container .about_title {
-    padding: 10px;
-    text-align: center;
-    font-size: 3rem;
     color: #999;
+    font-size: 1.6rem;
 }
 
-.about_container .about_content {
-    font-size: 1.6rem;
-    color: #222;
-    background-color: #777;
-    padding: 8px;
+.sidebar .title {
+    padding: 10px 5px;
+    font-size: 3rem;
+}
+
+.sidebar .content {
+    padding: 5px;
     border-radius: 5px;
 }
