@@ -21,6 +21,7 @@ html, body {
     border-radius: 0;
     margin-bottom: 0;
     border-bottom: 1px solid black;
+    z-index: 10;
 }
 
 #map_canvas {
