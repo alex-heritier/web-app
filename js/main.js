@@ -32,9 +32,22 @@ require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
 			about_link,
 			about_parents,
 			add_report_link,
-			add_report_parents;
+			add_report_parents,
+			Sidebar,
+			sidebars;
 
-		map = maps.init("map_canvas", {lat: 35.6895, lng: 139.6917});
+		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
+
+		// class that stores links, highlight items and init code for sidebar menus
+		Sidebar = function(params) {
+			this.sidebar = params.sidebar;
+			this.anchors = params.anchors;
+			this.highlights = params.highlights;
+			this.init = function() {
+
+			};
+		};
+
 		getLinkListener = function(container, link_parents) {
 			return function() {
 				// deactivate all other active links
@@ -42,7 +55,7 @@ require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
 					$('a[href="#/about"]').trigger('click');
 				}
 				if (!$('.add_report_container').is(container) && $('.add_report_container').css('left') === "0px") {
-					$('a[href="#/add/"]').trigger('click');
+					$('a[href="#/add"]').trigger('click');
 				}
 
 				// if container is off screen
@@ -69,7 +82,7 @@ require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
 		about_parents.push(about_link.parent());
 		about_link.click(getLinkListener($('.about_container'), about_parents));
 
-		add_report_link = $('a[href="#/add/"]');
+		add_report_link = $('a[href="#/add"]');
 		add_report_parents = [];
 		add_report_parents.push(add_report_link.parent(), add_report_link.parent().parent().parent());
 		add_report_link.click(getLinkListener($('.add_report_container'), add_report_parents));
