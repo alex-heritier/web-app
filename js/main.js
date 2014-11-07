@@ -40,51 +40,69 @@ require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
 
 		// class that stores links, highlight items and init code for sidebar menus
 		Sidebar = function(params) {
+			var that = this;
+			this.name = params.name;
 			this.sidebar = params.sidebar;
 			this.anchors = params.anchors;
 			this.highlights = params.highlights;
-			this.init = function() {
+			this.visible = false;
 
-			};
-		};
-
-		getLinkListener = function(container, link_parents) {
-			return function() {
-				// deactivate all other active links
-				if (!$('.about_container').is(container) && $('.about_container').css('left') === "0px") {
-					$('a[href="#/about"]').trigger('click');
-				}
-				if (!$('.add_report_container').is(container) && $('.add_report_container').css('left') === "0px") {
-					$('a[href="#/add"]').trigger('click');
-				}
-
+			// toggles sidebar visibility and toggles highlight links
+			this.toggle = function() {
 				// if container is off screen
-				if (container.css('left') !== "0px") {
-					container.css({
+				if (this.visible !== true) {
+					this.sidebar.css({
 						'left': '0px',
 						'opacity': 1
 					});
 				} else {	// if container is showing
-					container.css({
+					this.sidebar.css({
 						'left': '-500px',
 						'opacity': 0
 					});
 				}
+				this.visible = !this.visible;
+
 				// make the parent links active
-				link_parents.forEach(function(parent) {
+				this.highlights.forEach(function(parent) {
 					parent.toggleClass('active');
 				});
-			}
+			};
+
+			// initializes the click listener
+			this.init = function() {
+				this.anchors.click(function() {
+					// deactivate all other active links
+					Sidebar.sidebars.forEach(function(sbar) {
+						if (sbar.visible === true && sbar.name !== that.name) {
+							sbar.toggle();
+						}
+					});
+					that.toggle();
+				});
+				return this;
+			};
 		};
 
-		about_link = $('a[href="#/about"]');
-		about_parents = [];
-		about_parents.push(about_link.parent());
-		about_link.click(getLinkListener($('.about_container'), about_parents));
-
-		add_report_link = $('a[href="#/add"]');
-		add_report_parents = [];
-		add_report_parents.push(add_report_link.parent(), add_report_link.parent().parent().parent());
-		add_report_link.click(getLinkListener($('.add_report_container'), add_report_parents));
+		// the list of sidebars
+		sidebars = [
+			new Sidebar({	// about sidebar
+				name: "about",
+				sidebar: $('.about_sidebar'),
+				anchors: $('a[href="#/about"]'),
+				highlights: [$('a[href="#/about"]').parent()]
+			}),
+			new Sidebar({	// add report sidebar
+				name: "add",
+				sidebar: $('.add_report_sidebar'),
+				anchors: $('a[href="#/add"]'),
+				highlights: [$('a[href="#/add"]').parent(),
+					$('a[href="#/add"]').parent().parent().parent()]
+			})
+		];
+		Sidebar.sidebars = sidebars;	// MUST BE DONE BEFORE SIDEBARS ARE INITED
+		sidebars.forEach(function(sbar) {
+			sbar.init();
+		});
 	});
 });
