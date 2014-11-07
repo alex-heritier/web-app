@@ -64,23 +64,10 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 							lng: Math.floor(Math.random() * 360) - 180
 						},
 						image_url: "http://www.austintexas.gov/sites/default/files/files/Animal_Services/cute-kitten-playing.jpg"
-
-<<<<<<< HEAD
 					});
 				}
 			}
 			report_list = reports.init(map, report_data);
 		});
-=======
-		about_link = $('a[href="#/about"]');
-		about_parents = [];
-		about_parents.push(about_link.parent());
-		about_link.click(getLinkListener($('.about_container'), about_parents));
-
-		add_report_link = $('a[href="#/add"]');
-		add_report_parents = [];
-		add_report_parents.push(add_report_link.parent(), add_report_link.parent().parent().parent());
-		add_report_link.click(getLinkListener($('.add_report_container'), add_report_parents));
->>>>>>> fixed a link + improving javascript
 	});
 });
