@@ -5,7 +5,8 @@ define(['gmaps'], function(gmaps) {
         coordinates = coordinates || {lat: 37.761513, lng: -122.401830};
         var mapOptions = {
             center: coordinates,
-            zoom: 10
+            zoom: 10,
+            zoomControl: false,  // disable zoom control UI
         };
         return new gmaps.Map(document.getElementById(id), mapOptions);
     }
