@@ -50,7 +50,7 @@ require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
 			// toggles sidebar visibility and toggles highlight links
 			this.toggle = function() {
 				// if container is off screen
-				if (this.visible !== true) {
+				if (this.visible === false) {
 					this.sidebar.css({
 						'left': '0px',
 						'opacity': 1
@@ -63,7 +63,7 @@ require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
 				}
 				this.visible = !this.visible;
 
-				// make the parent links active
+				// toggle the parent links
 				this.highlights.forEach(function(parent) {
 					parent.toggleClass('active');
 				});
@@ -78,14 +78,14 @@ require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
 							sbar.toggle();
 						}
 					});
-					that.toggle();
+					that.toggle();	// toggle the current sidebar
 				});
 				return this;
 			};
 		};
 
 		// the list of sidebars
-		sidebars = [
+		Sidebar.sidebars = [
 			new Sidebar({	// about sidebar
 				name: "about",
 				sidebar: $('.about_sidebar'),
@@ -100,8 +100,7 @@ require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
 					$('a[href="#/add"]').parent().parent().parent()]
 			})
 		];
-		Sidebar.sidebars = sidebars;	// MUST BE DONE BEFORE SIDEBARS ARE INITED
-		sidebars.forEach(function(sbar) {
+		Sidebar.sidebars.forEach(function(sbar) {	// init all sidebars
 			sbar.init();
 		});
 	});
