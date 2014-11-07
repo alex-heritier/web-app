@@ -53,3 +53,9 @@ html, body {
     padding: 5px;
     border-radius: 5px;
 }
+
+/* About sidebar starts off visible */
+.about_sidebar {
+    left: 0px;
+    opacity: 1;
+}

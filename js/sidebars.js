@@ -12,7 +12,7 @@ define(function() {
             this.sidebar = params.sidebar;
             this.anchors = params.anchors;
             this.highlights = params.highlights;
-            this.visible = false;
+            this.visible = params.visible || false;
 
             // toggles sidebar visibility and toggles highlight links
             this.toggle = function() {
@@ -57,14 +57,16 @@ define(function() {
                 name: "about",
                 sidebar: $('.about_sidebar'),
                 anchors: $('a[href="#/about"]'),
-                highlights: [$('a[href="#/about"]').parent()]
+                highlights: [$('a[href="#/about"]').parent()],
+                visible: true
             }),
             new Sidebar({	// add report sidebar
                 name: "add",
                 sidebar: $('.add_report_sidebar'),
                 anchors: $('a[href="#/add"]'),
                 highlights: [$('a[href="#/add"]').parent(),
-                    $('a[href="#/add"]').parent().parent().parent()]
+                    $('a[href="#/add"]').parent().parent().parent()],
+                visible: false
             })
         ];
         Sidebar.sidebars.forEach(function(sbar) {	// init all sidebars
