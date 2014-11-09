@@ -9,8 +9,7 @@ class DaylightDB
 	const USER = 'daylight';
 	const PASS = 'h8corruption';
 	const DB_NAME = 'daylight_db';
-	const TABLE_NAME = 'corruption_reports_test';
-
+	
 	function __construct()
 	{
 		$this->db = new mysqli(DaylightDB::HOST, DaylightDB::USER, DaylightDB::PASS, DaylightDB::DB_NAME);
@@ -18,7 +17,7 @@ class DaylightDB
 		    die('Connect Error (' . $this->db->connect_errno . ') ' . $this->db->connect_error);
 		}
 	}
-
+	
 	function __destruct()
 	{
 		$this->db->close();
@@ -28,20 +27,22 @@ class DaylightDB
 	{
 		$result = $this->db->query($query);
 		if (! $result) {
-		   echo "Error code ({$result->errno}): {$result->error}";
+		   echo "Query failed: $query, {$this->db->error}";
 		}
 		return $result;
 	}
-
-	function add_report($title, $description, $category, $requested, $paid, $currency, $latitude, $longitude, $image)
+	
+	function get_reports()
 	{
-		$query = "INSERT INTO " . DaylightDB::TABLE_NAME . " (datetime, title, description, category, requested, paid, currency, latitude, longitude, image) VALUES (NOW(), '$title', '$description', '$category', '$requested', '$paid', '$currency', '$latitude', '$longitude', '$image')";
+		$query = 'SELECT * FROM corruption_reports ' .
+		       'ORDER BY date DESC LIMIT 100';
 		return $this->query($query);
 	}
 
-	function get_reports()
+	function get_local()
 	{
-		$query = 'SELECT * FROM ' . DaylightDB::TABLE_NAME. ' ORDER BY datetime DESC LIMIT 100';
+		$query = 'SELECT * FROM corruption_reports ' .
+		       'ORDER BY date DESC LIMIT 100';
 		return $this->query($query);
 	}
 }

@@ -6,7 +6,7 @@
 require('db.php');
 
 $db = new DaylightDB();
-$result = $db->get_reports();
+$result = $db->get_local();
 while ($row = $result->fetch_row()) {
       for ($j = 0; $j < count($row); $j++) {
       	  $raw = $row[$j];
