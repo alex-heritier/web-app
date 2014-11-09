@@ -48,11 +48,12 @@ define(['gmaps'], function(gmaps) {
 
         google.maps.event.addListener(this.marker, 'click', function() {
             Report.infowindow.close();
+            console.log("this: " + this);
+            console.log("activeMarker: " + Report.activeMarker);
             if (this !== Report.activeMarker) { // if this marker isn't active
                 Report.activeMarker = this;                 // set to active marker
                 Report.infowindow.open(map, that.marker);   // make active
                 Report.infowindow.setContent(makeWindowContent());
-                console.log(that);
             } else {
                 Report.activeMarker = null; // leave closed and deactivate
             }
