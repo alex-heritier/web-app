@@ -6,7 +6,7 @@ define(['gmaps'], function() {
 
     initReports = function(map, data) {
         data.forEach(function(report, i) {
-            markers.push(
+            reports.push(
                 new gmaps.Marker({
                     title: "A Marker!!!",
                     map: map,
