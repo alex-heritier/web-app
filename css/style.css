@@ -21,6 +21,7 @@ html, body {
     border-radius: 0;
     margin-bottom: 0;
     border-bottom: 1px solid black;
+    z-index: 10;
 }
 
 #map_canvas {
@@ -33,7 +34,7 @@ html, body {
     top: 50px;
     height: 100%;
     left: -500px;
-    width: 25%;
+    width: 30%;
     background-color: #222;
     border-right: 1px solid black;
     border-top: 1px solid black;
@@ -51,4 +52,10 @@ html, body {
 .sidebar .content {
     padding: 5px;
     border-radius: 5px;
+}
+
+/* About sidebar starts off visible */
+.about_sidebar {
+    left: 0px;
+    opacity: 1;
 }

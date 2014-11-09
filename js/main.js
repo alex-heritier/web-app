@@ -12,7 +12,6 @@ requirejs.config({
 	},
 	paths: {
 		'jquery': '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
-		'jquery_ui': '//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min',
 		'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min',
 		'async': 'lib/async'
 	}
@@ -25,53 +24,36 @@ function(){
     return window.google.maps;
 });
 
-require(['jquery', 'maps', 'bootstrap', 'jquery_ui'], function($, maps) {
+require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps, sb, reports) {
 	$(document).ready(function() {
 		var map,
-			getLinkListener,
-			about_link,
-			about_parents,
-			add_report_link,
-			add_report_parents;
+			sidebars,
+			report_data,
+			report_list;
 
-		map = maps.init("map_canvas", {lat: 35.6895, lng: 139.6917});
-		getLinkListener = function(container, link_parents) {
-			return function() {
-				// deactivate all other active links
-				if (!$('.about_container').is(container) && $('.about_container').css('left') === "0px") {
-					$('a[href="#/about"]').trigger('click');
-				}
-				if (!$('.add_report_container').is(container) && $('.add_report_container').css('left') === "0px") {
-					$('a[href="#/add/"]').trigger('click');
-				}
+		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
+		sidebars = sb.init();
 
-				// if container is off screen
-				if (container.css('left') !== "0px") {
-					container.css({
-						'left': '0px',
-						'opacity': 1
-					});
-				} else {	// if container is showing
-					container.css({
-						'left': '-500px',
-						'opacity': 0
-					});
-				}
-				// make the parent links active
-				link_parents.forEach(function(parent) {
-					parent.toggleClass('active');
-				});
+		$.get("server/web-app_server/get_report.php", function(data) {
+			try {	// works online, fails locally
+				report_data = $.parseJSON(data);
 			}
-		};
-
-		about_link = $('a[href="#/about"]');
-		about_parents = [];
-		about_parents.push(about_link.parent());
-		about_link.click(getLinkListener($('.about_container'), about_parents));
-
-		add_report_link = $('a[href="#/add/"]');
-		add_report_parents = [];
-		add_report_parents.push(add_report_link.parent(), add_report_link.parent().parent().parent());
-		add_report_link.click(getLinkListener($('.add_report_container'), add_report_parents));
+			catch (e) {	// if local, make random locations
+				report_data = [];
+				for (var i = 0; i < 20; i++) {
+					report_data.push({
+						location: {
+							lat: Math.floor(Math.random() * 180) - 90,
+							lng: Math.floor(Math.random() * 180) - 90
+						}
+					});
+				}
+			}
+			report_data.forEach(function(report) {
+				report.location.lat = parseFloat(report.location.lat);
+				report.location.lng = parseFloat(report.location.lng);
+			});
+			report_list = reports.init(map, report_data);
+		});
 	});
 });
