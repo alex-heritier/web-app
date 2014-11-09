@@ -59,3 +59,13 @@ html, body {
     left: 0px;
     opacity: 1;
 }
+
+.infowindow {
+    width: 100%;
+}
+
+.infowindow img {
+    width: 100%;
+    height: auto;
+    border: 1px solid black;
+}

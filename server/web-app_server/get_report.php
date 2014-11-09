@@ -49,7 +49,7 @@ while ($result = $res->fetch_row()) {
 		"lat" => mysqli_real_escape_string($db->db, $result[8]),
 		"lng" => mysqli_real_escape_string($db->db, $result[9]));
 	//image
-	$report_arr[$i]["image"] = mysqli_real_escape_string($db->db, $result[10]);
+	$report_arr[$i]["image_url"] = mysqli_real_escape_string($db->db, $result[10]);
 	$i++;
 }
 echo json_encode($report_arr);
