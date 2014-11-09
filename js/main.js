@@ -48,7 +48,7 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 				}
 			},
 		];*/
-		var result = $.get("server/get_report.php", function(data) {
+		var result = $.get("server/web-app_server/get_report.php", function(data) {
 			data = $.parseJSON(data);
 			console.log(data);
 			report_list = reports.init(map, data);
