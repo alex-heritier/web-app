@@ -5,12 +5,12 @@ define(['gmaps'], function(gmaps) {
         coordinates = coordinates || {lat: 37.761513, lng: -122.401830};
         var mapOptions = {
             center: coordinates,
-            zoom: 10,
+            zoom: 1,
+            disableDefaultUI: true,
             zoomControl: true,
-            panControl: false,
-            scaleControl: false,
-            mapTypeControl: false,
-            streetViewControl: false,
+            zoomControlOptions: {
+                position: gmaps.ControlPosition.RIGHT_TOP
+            }
         };
         return new gmaps.Map(document.getElementById(id), mapOptions);
     }
