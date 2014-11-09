@@ -28,13 +28,13 @@ require(['jquery', 'maps', 'sidebars', 'markers', 'reports', 'bootstrap'], funct
 	$(document).ready(function() {
 		var map,
 			sidebars,
-			report_data,
-			marker_list;
+			// report_data,
+			report_list;
 
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
 		sidebars = sb.init();
 
-		report_data = [
+		/*report_data = [
 			{
 				location: {
 					lat: 50,
@@ -47,15 +47,11 @@ require(['jquery', 'maps', 'sidebars', 'markers', 'reports', 'bootstrap'], funct
 					lng: 30
 				}
 			},
-		];
+		];*/
 		var result = $.get("server/get_report.php", function(data) {
-			console.log($.parseJSON(data));
-			marker_list = markers.init(map, data);
+			data = $.parseJSON(data);
+			console.log(data);
+			report_list = markers.init(map, data);
 		});
-
-		/*
-		var result = $.get("server/get_report.php", function(data) {
-			markers.createMarkers(map, data);
-		});//*/
 	});
 });
