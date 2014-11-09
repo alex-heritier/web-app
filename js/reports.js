@@ -43,7 +43,7 @@ define(['gmaps'], function(gmaps) {
                     "<p class='currency'>Currency: " + that.bribe.currency + "</p>" +
                 "</div>" +
                 "<img src='" + that.image_url + "'>" +
-                "</div>";
+            "</div>";
         };
 
         google.maps.event.addListener(this.marker, 'click', function() {
