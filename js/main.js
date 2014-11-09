@@ -50,6 +50,10 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 		];*/
 		var result = $.get("server/web-app_server/get_report.php", function(data) {
 			data = $.parseJSON(data);
+			data.forEach(function(report) {
+				report.location.lat = parseFloat(report.location.lat);
+				report.location.lng = parseFloat(report.location.lng);
+			});
 			console.log(data);
 			report_list = reports.init(map, data);
 		});
