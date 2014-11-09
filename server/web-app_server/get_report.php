@@ -15,8 +15,8 @@ REPORT JSON
 		"currency": STRING
 	},
 	"location": {
-		"latitude": NUMBER,
-		"longitude": NUMBER
+		"lat": NUMBER,
+		"lng": NUMBER
 	},
 	"image_url": STRING
 }
@@ -46,8 +46,8 @@ while ($result = $res->fetch_row()) {
 		"currency" => mysqli_real_escape_string($db->db, $result[7]));
 	//location
 	$report_arr[$i]["location"] = array(
-		"latitude" => mysqli_real_escape_string($db->db, $result[8]),
-		"longitude" => mysqli_real_escape_string($db->db, $result[9]));
+		"lat" => mysqli_real_escape_string($db->db, $result[8]),
+		"lng" => mysqli_real_escape_string($db->db, $result[9]));
 	//image
 	$report_arr[$i]["image"] = mysqli_real_escape_string($db->db, $result[10]);
 	$i++;
