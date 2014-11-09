@@ -59,11 +59,11 @@ define(function() {
 
         // Initialize Sidebar.sidebars
         Sidebar.register({	// about sidebar
-            name: "about",
-            sidebar: $('.about_sidebar'),
-            anchors: $('a[href="#/about"]'),
-            highlights: [$('a[href="#/about"]').parent()],
-            visible: true
+            name: "about",  // the sidebars unique name
+            sidebar: $('.about_sidebar'),   // the sidebar element
+            anchors: $('a[href="#/about"]'),    // the sidebar's link
+            highlights: [$('a[href="#/about"]').parent()],  // the elements that are made active
+            visible: true   // the sidebar's starting visibility
         }).register({	// add report sidebar
             name: "add",
             sidebar: $('.add_report_sidebar'),

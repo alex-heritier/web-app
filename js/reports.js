@@ -8,7 +8,7 @@ define(['gmaps'], function(gmaps) {
         data.forEach(function(report) {
             reports.push(
                 new gmaps.Marker({
-                    title: report.title,
+                    title: report.title || "A Report!",
                     map: map,
                     position: report.location
                 })
