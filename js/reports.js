@@ -1,11 +1,24 @@
 'use strict';
 
-define(['markers'], function() {
-    var processMarkers = function(report_data) {
-        return $.parseJSON(report_data);
+define(['gmaps'], function() {
+    var initReports,
+        reports = [];
+
+    initReports = function(map, data) {
+        data.forEach(function(report, i) {
+            markers.push(
+                new gmaps.Marker({
+                    title: "A Marker!!!",
+                    map: map,
+                    position: data[i].location
+                })
+            );
+        });
+
+        return reports;
     };
 
     return {
-        processMarkers: processMarkers
+        init: initReports
     }
 });
