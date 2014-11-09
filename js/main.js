@@ -48,7 +48,9 @@ require(['jquery', 'maps', 'sidebars', 'markers', 'reports', 'bootstrap'], funct
 				}
 			},
 		];
-		marker_list = markers.init(map, report_data);
+		var result = $.get("server/get_report.php", function(data) {
+			marker_list = markers.init(map, data);
+		});
 
 		/*
 		var result = $.get("server/get_report.php", function(data) {
