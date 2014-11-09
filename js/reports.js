@@ -5,12 +5,12 @@ define(['gmaps'], function(gmaps) {
         reports = [];
 
     initReports = function(map, data) {
-        data.forEach(function(report, i) {
+        data.forEach(function(report) {
             reports.push(
                 new gmaps.Marker({
-                    title: "A Marker!!!",
+                    title: report.title,
                     map: map,
-                    position: data[i].location
+                    position: report.location
                 })
             );
         });
