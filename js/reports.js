@@ -1,6 +1,6 @@
 'use strict';
 
-define(['gmaps'], function() {
+define(['gmaps'], function(gmaps) {
     var initReports,
         reports = [];
 
