@@ -3,8 +3,11 @@
 define(['gmaps'], function(gmaps) {
     var Report,
         initReports,
-        reports = [];
+        reports = [],
+        activeMarker = null,
+        infowindow;
 
+    // Reports represent the report data returned from the server
     Report = function(map, params) {
         var that = this,
             makeWindowContent;
@@ -46,28 +49,28 @@ define(['gmaps'], function(gmaps) {
             "</div>";
         };
 
-        google.maps.event.addListener(this.marker, 'click', function() {
-            Report.infowindow.close();
-            console.log("this: " + this);
-            console.log("activeMarker: " + Report.activeMarker);
-            if (this !== Report.activeMarker) { // if this marker isn't active
-                Report.activeMarker = this;                 // set to active marker
-                Report.infowindow.open(map, that.marker);   // make active
-                Report.infowindow.setContent(makeWindowContent());
+        gmaps.event.addListener(this.marker, 'click', function() {
+            infowindow.close();
+            if (this !== activeMarker) { // if this marker isn't active
+                activeMarker = this;                 // set to active marker
+                infowindow.open(map, that.marker);   // make active
+                infowindow.setContent(makeWindowContent());
             } else {
-                Report.activeMarker = null; // leave closed and deactivate
+                activeMarker = null; // leave closed and deactivate
             }
         });
-        google.maps.event.addListener(this.marker, 'closeclick', function() {
-            Report.activeMarker = null; // deactivate
-        });
     };
-    Report.activeMarker = null; // the marker with the infowindow
-    Report.infowindow = new gmaps.InfoWindow({
-        maxWidth: 400
-    });
 
     initReports = function(map, data) {
+        // init infowindow
+        infowindow = new gmaps.InfoWindow({
+            maxWidth: 400
+        });
+        gmaps.event.addListener(infowindow, 'closeclick', function() {
+            activeMarker = null; // deactivate
+        });
+
+        // init reports
         data.forEach(function(report_data) {
             var report = new Report(map, report_data);
             reports.push(report);
