@@ -5,7 +5,7 @@ define(['gmaps'], function(gmaps) {
         coordinates = coordinates || {lat: 37.761513, lng: -122.401830};
         var mapOptions = {
             center: coordinates,
-            zoom: 10,
+            zoom: 1,
             disableDefaultUI: true,
             zoomControl: true,
             zoomControlOptions: {
