@@ -29,21 +29,25 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 		var map,
 			sidebars,
 			report_data,
-			report_list,
-			result;
+			report_list;
 
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
 		sidebars = sb.init();
 
-		result = $.get("server/web-app_server/get_report.php", function(data) {
+		$.get("server/web-app_server/get_report.php", function(data) {
 			try {	// works online, fails locally
 				report_data = $.parseJSON(data);
 			}
-			catch (e) {
-				report_data = [
-					{location: {lat: 50, lng: 90}},
-					{location: {lat: 10, lng: 30}},
-				];
+			catch (e) {	// if local, make random locations
+				report_data = [];
+				for (var i = 0; i < 20; i++) {
+					report_data.push({
+						location: {
+							lat: Math.floor(Math.random() * 180) - 90,
+							lng: Math.floor(Math.random() * 180) - 90
+						}
+					});
+				}
 			}
 			report_data.forEach(function(report) {
 				report.location.lat = parseFloat(report.location.lat);
