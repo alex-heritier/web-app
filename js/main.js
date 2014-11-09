@@ -24,7 +24,7 @@ function(){
     return window.google.maps;
 });
 
-require(['jquery', 'maps', 'sidebars', 'markers', 'reports', 'bootstrap'], function($, maps, sb, markers, reports) {
+require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps, sb, reports) {
 	$(document).ready(function() {
 		var map,
 			sidebars,
@@ -51,7 +51,7 @@ require(['jquery', 'maps', 'sidebars', 'markers', 'reports', 'bootstrap'], funct
 		var result = $.get("server/get_report.php", function(data) {
 			data = $.parseJSON(data);
 			console.log(data);
-			report_list = markers.init(map, data);
+			report_list = reports.init(map, data);
 		});
 	});
 });
