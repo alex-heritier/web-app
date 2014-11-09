@@ -49,6 +49,7 @@ require(['jquery', 'maps', 'sidebars', 'markers', 'reports', 'bootstrap'], funct
 			},
 		];
 		var result = $.get("server/get_report.php", function(data) {
+			console.log($.parseJSON(data));
 			marker_list = markers.init(map, data);
 		});
 
