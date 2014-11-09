@@ -52,6 +52,7 @@ define(['gmaps'], function(gmaps) {
                 Report.activeMarker = this;                 // set to active marker
                 Report.infowindow.open(map, that.marker);   // make active
                 Report.infowindow.setContent(makeWindowContent());
+                console.log(that);
             } else {
                 Report.activeMarker = null; // leave closed and deactivate
             }
