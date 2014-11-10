@@ -64,8 +64,22 @@ html, body {
     width: 100%;
 }
 
+.infowindow .infowindow_left {
+    float: left;
+    width: 33%;
+}
+
+.infowindow .infowindow_right {
+    float: right;
+    width: 50%;
+}
+
 .infowindow img {
     width: 100%;
     height: auto;
     border: 1px solid black;
+}
+
+.infowindow .description {
+    clear: both;
 }
