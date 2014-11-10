@@ -38,14 +38,16 @@ define(['gmaps'], function(gmaps) {
         makeWindowContent = function() {
             return "<div class='infowindow'>" +
                 "<p class='title'>Title: " + that.title + "</p>" +
-                "<p class='description'>Description: " + that.description + "</p>" +
-                "<div class='bribe'>" +
+                "<div class='infowindow_left'>" +
+                    "<img src='" + that.image_url + "'>" +
+                "</div>" +
+                "<div class='infowindow_right'>" +
                     "<p class='category'>Category: " + that.bribe.category + "</p>" +
                     "<p class='requested'>Amount requested: " + that.bribe.requested + "</p>" +
                     "<p class='paid'>Amount paid: " + that.bribe.paid + "</p>" +
                     "<p class='currency'>Currency: " + that.bribe.currency + "</p>" +
                 "</div>" +
-                "<img src='" + that.image_url + "'>" +
+                "<p class='description'>Description: " + that.description + "</p>" +
             "</div>";
         };
 
