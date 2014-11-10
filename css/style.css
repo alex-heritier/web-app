@@ -64,6 +64,10 @@ html, body {
     width: 100%;
 }
 
+.infowindow .title {
+    text-align: center;
+}
+
 .infowindow .infowindow_left {
     float: left;
     width: 33%;
