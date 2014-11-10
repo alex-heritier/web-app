@@ -44,7 +44,7 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			}
 			catch (e) {	// if local, make random locations
 				report_data = [];
-				for (var i = 0; i < 20; i++) {
+				for (var i = 0; i < 60; i++) {
 					var date = new Date(Date.now());
 					report_data.push({
 						datetime: {
@@ -55,8 +55,8 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 						description: "Some random description " + Math.floor(Math.random() * 180),
 						bribe: {
 							category: "Bribe",
-							requested: 420,
-							paid: 69,
+							requested: Math.floor(Math.random() * 1000),
+							paid: Math.floor(Math.random() * 800),
 							currency: "USD"
 						},
 						location: {
