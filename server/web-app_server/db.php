@@ -17,6 +17,7 @@ class DaylightDB
 		if ($this->db->connect_error) {
 		    die('Connect Error (' . $this->db->connect_errno . ') ' . $this->db->connect_error);
 		}
+		$this->db->set_charset("utf8");
 	}
 
 	function __destruct()
