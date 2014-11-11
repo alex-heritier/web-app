@@ -11,18 +11,18 @@ $title = (array_key_exists('title', $_POST) ?
              "'" . $_POST['title'] . "'" : 'null');
 $description = (array_key_exists('description', $_POST) ?
                 "'" . $_POST['description'] . "'" : 'null');
-$category = (array_key_exists('category', $_POST) ?
-             "'" . $_POST['category'] . "'" : 'null');
-$requested = (array_key_exists('requested', $_POST) ?
-             $_POST['requested'] : "null");
-$paid = (array_key_exists('paid', $_POST) ?
-             $_POST['paid'] : "null");
-$currency = (array_key_exists('currency', $_POST) ?
-             "'" . $_POST['currency'] . "'" : "null");
-$lat = (array_key_exists('lat', $_POST) ?
-             $_POST['lat'] : 'null');
-$lng = (array_key_exists('lng', $_POST) ?
-             $_POST['lng'] : 'null');
+$category = (array_key_exists('category', $_POST['bribe']) ?
+             "'" . $_POST['bribe']['category'] . "'" : 'null');
+$requested = (array_key_exists('requested', $_POST['bribe']) ?
+             $_POST['bribe']['requested'] : "null");
+$paid = (array_key_exists('paid', $_POST['bribe']) ?
+             $_POST['bribe']['paid'] : "null");
+$currency = (array_key_exists('currency', $_POST['bribe']) ?
+             "'" . $_POST['bribe']['currency'] . "'" : "null");
+$lat = (array_key_exists('lat', $_POST['location']) ?
+             $_POST['location']['lat'] : 'null');
+$lng = (array_key_exists('lng', $_POST['location']) ?
+             $_POST['location']['lng'] : 'null');
 $image = (array_key_exists('image_url', $_POST) ?
                 "'" . $_POST['image_url'] . "'" : 'null');
 echo $title . "\n";

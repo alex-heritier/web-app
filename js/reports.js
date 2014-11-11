@@ -1,6 +1,6 @@
 'use strict';
 
-define(['gmaps'], function(gmaps) {
+define(['gmaps', 'jquery'], function(gmaps, $) {
     var Report,
         initReports,
         register,
@@ -84,8 +84,11 @@ define(['gmaps'], function(gmaps) {
         return reports;
     };
 
-    register = function(map, params) {
+    register = function(map, params, callback) {
         reports.push(new Report(map, params));
+        $.post('server/web-app_server/add_report.php', params).done(function(response) {
+            callback(response);
+        });
     };
 
     return {

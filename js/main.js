@@ -75,18 +75,8 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 
 		// report submission code
 		$('.add_report_submit').click(function() {
+			$('.add_report_progress').text("Submitting...");
 			var new_report = {
-				title: $('input[name=title]').val(),
-				description: $('textarea[name=description]').val(),
-				category: $('select[name=category]').val(),
-				requested: $('input[name=requested]').val(),
-				paid: $('input[name=paid]').val(),
-				currency: $('input[name=currency]').val(),
-				lat: $('input[name=lat]').val(),
-				lng: $('input[name=lng]').val(),
-				image_url: $('input[name=image_url]').val()
-			};
-			reports.register(map, {
 				title: $('input[name=title]').val(),
 				description: $('textarea[name=description]').val(),
 				bribe: {
@@ -96,13 +86,12 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 					currency: $('input[name=currency]').val()
 				},
 				location: {
-					lat: $('input[name=lat]').val(),
-					lng: $('input[name=lng]').val()
+					lat: parseFloat($('input[name=lat]').val()),
+					lng: parseFloat($('input[name=lng]').val())
 				},
 				image_url: $('input[name=image_url]').val()
-			});
-			$('.add_report_progress').text("Submitting...");
-			$.post('server/web-app_server/add_report.php', new_report).done(function(response) {
+			};
+			reports.register(map, new_report, function(response) {
 				$('.add_report_progress').text("Submitted!");
 			});
 		});
