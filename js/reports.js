@@ -3,6 +3,7 @@
 define(['gmaps'], function(gmaps) {
     var Report,
         initReports,
+        register,
         reports = [],
         activeMarker = null,
         infowindow,
@@ -40,7 +41,7 @@ define(['gmaps'], function(gmaps) {
             if (this !== activeMarker) { // if this marker isn't active
                 activeMarker = this;                 // set to active marker
                 infowindow.open(map, that.marker);   // make active
-                infowindow.setContent(makeWindowContent());
+                infowindow.setContent(makeWindowContent(that));
             } else {
                 activeMarker = null; // leave closed and deactivate
             }
@@ -48,7 +49,7 @@ define(['gmaps'], function(gmaps) {
     };
 
     // creates infowindow's content
-    makeWindowContent = function() {
+    makeWindowContent = function(that) {
         return "<div class='infowindow'>" +
             "<p class='title'>Title: " + that.title + "</p>" +
             "<div class='infowindow_left'>" +
@@ -82,7 +83,12 @@ define(['gmaps'], function(gmaps) {
         return reports;
     };
 
+    register = function(params) {
+        reports.push(new Report(map, params));
+    };
+
     return {
-        init: initReports
+        init: initReports,
+        register: register
     }
 });
