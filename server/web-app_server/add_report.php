@@ -1,8 +1,8 @@
 <?php
 
 // Handy debugging statements:
-// ini_set('display_errors', 'On');
-// error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_STRICT);
 
 require('db.php');
 
@@ -25,9 +25,10 @@ $lng = (array_key_exists('lng', $_POST) ?
              $_POST['lng'] : 'null');
 $image = (array_key_exists('image_url', $_POST) ?
                 "'" . $_POST['image_url'] . "'" : 'null');
-
+echo $title . "\n";
+echo $lat . "\n";
 $db = new DaylightDB();
-$result = $db->add_report($title, $description, $category, $requested, $paid, $currency, $latitude, $longitude, $image);
+$result = $db->add_report($title, $description, $category, $requested, $paid, $currency, $lat, $lng, $image);
 if (FALSE == $result) {
    fail();
 }
