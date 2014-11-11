@@ -60,3 +60,31 @@ html, body {
     left: 0px;
     opacity: 1;
 }
+
+.infowindow {
+    width: 100%;
+}
+
+.infowindow .title {
+    text-align: center;
+}
+
+.infowindow .infowindow_left {
+    float: left;
+    width: 33%;
+}
+
+.infowindow .infowindow_right {
+    float: right;
+    width: 50%;
+}
+
+.infowindow img {
+    width: 100%;
+    height: auto;
+    border: 1px solid black;
+}
+
+.infowindow .description {
+    clear: both;
+}

@@ -2,8 +2,7 @@
 
 define(function() {
     var initSidebars = function() {
-        var Sidebar,
-            sidebars;
+        var Sidebar;
 
         // class that stores links, highlight items and init code for sidebar menus
         Sidebar = function(params) {
@@ -37,40 +36,41 @@ define(function() {
             };
 
             // initializes the click listener
-            this.init = function() {
-                this.anchors.click(function() {
-                    // deactivate all other active links
-                    Sidebar.sidebars.forEach(function(sbar) {
-                        if (sbar.visible === true && sbar.name !== that.name) {
-                            sbar.toggle();
-                        }
-                    });
-                    that.toggle();	// toggle the current sidebar
+            this.anchors.click(function() {
+                // deactivate all other active links
+                Sidebar.sidebars.forEach(function(sbar) {
+                    if (sbar.visible === true && sbar.name !== that.name) {
+                        sbar.toggle();
+                    }
                 });
-                return this;
-            };
+                that.toggle();	// toggle the current sidebar
+            });
+            return this;
         };
 
-        // the list of sidebars
-        Sidebar.sidebars = [
-            new Sidebar({	// about sidebar
-                name: "about",
-                sidebar: $('.about_sidebar'),
-                anchors: $('a[href="#/about"]'),
-                highlights: [$('a[href="#/about"]').parent()],
-                visible: true
-            }),
-            new Sidebar({	// add report sidebar
-                name: "add",
-                sidebar: $('.add_report_sidebar'),
-                anchors: $('a[href="#/add"]'),
-                highlights: [$('a[href="#/add"]').parent(),
-                    $('a[href="#/add"]').parent().parent().parent()],
-                visible: false
-            })
-        ];
-        Sidebar.sidebars.forEach(function(sbar) {	// init all sidebars
-            sbar.init();
+        // Sidebar.sidebars: the master array of sidebars
+        Sidebar.sidebars = [];
+
+        // Sidebar.register(): adds a sidebar to Sidebar.sidebars
+        Sidebar.register = function(sidebar_params) {
+            Sidebar.sidebars.push(new Sidebar(sidebar_params));
+            return Sidebar;
+        };
+
+        // Initialize Sidebar.sidebars
+        Sidebar.register({	// about sidebar
+            name: "about",  // the sidebars unique name
+            sidebar: $('.about_sidebar'),   // the sidebar element
+            anchors: $('a[href="#/about"]'),    // the sidebar's link
+            highlights: [$('a[href="#/about"]').parent()],  // the elements that are made active
+            visible: true   // the sidebar's starting visibility
+        }).register({	// add report sidebar
+            name: "add",
+            sidebar: $('.add_report_sidebar'),
+            anchors: $('a[href="#/add"]'),
+            highlights: [$('a[href="#/add"]').parent(),
+                $('a[href="#/add"]').parent().parent().parent()],
+            visible: false
         });
 
         return Sidebar.sidebars;

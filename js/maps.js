@@ -6,11 +6,11 @@ define(['gmaps'], function(gmaps) {
         var mapOptions = {
             center: coordinates,
             zoom: 10,
+            disableDefaultUI: true,
             zoomControl: true,
-            panControl: false,
-            scaleControl: false,
-            mapTypeControl: false,
-            streetViewControl: false,
+            zoomControlOptions: {
+                position: gmaps.ControlPosition.RIGHT_TOP
+            }
         };
         return new gmaps.Map(document.getElementById(id), mapOptions);
     }
