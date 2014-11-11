@@ -61,6 +61,10 @@ html, body {
     opacity: 1;
 }
 
+.add_report_sidebar .title h1 {
+    font-size: 2.7rem;
+}
+
 .infowindow {
     width: 100%;
 }

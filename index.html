@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< HEAD
-    <meta http-equiv="Content-Type" content="text/html;  bn">
-=======
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
->>>>>>> 8e9a4b9385d9df34c1df2ecde9b5d3f705a8b171
     <title>Daylight</title>
 
     <!-- CSS -->
@@ -55,12 +51,26 @@
         <div class="container-fluid add_report_sidebar sidebar">
             <div class="row">
                 <div class="col-md-6 col-md-offset-1 title">
-                    <h1>Reports</h1>
+                    <h1>Submit a Report</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 content">
-                    <p>Lorem ipsumm dolor sit amet, consectetur adipiscing elit. Duis ultricies velit nisl, ut sodales lectus bibendum et. Fusce ultricies odio sed augue suscipit lacinia. Aenean ullamcorper massa a purus vestibulum, in tristique erat faucibus. Maecenas feugiat, elit non dignissim convallis, ante ipsum consectetur leo, nec congue lorem tellus eget sapien. Duis at nisl sed mauris ullamcorper commodo. Phasellus congue purus orci, quis faucibus ligula vestibulum non. Nam blandit, odio sit amet bibendum ullamcorper, leo orci venenatis quam, vitae vestibulum ipsum tortor ac orci. Phasellus feugiat ante nec egestas dapibus. Phasellus molestie aliquet elit id efficitur. Vivamus a tortor vulputate, fermentum quam vitae, consectetur augue.</p>
+                    Title: <input type="text" name="title"><br>
+                    Description:<br><textarea name="description"></textarea><br>
+                    Category: <select name="category">
+                        <option value="bribe">Bribe</option>
+                        <option value="corruption">Corruption</option>
+                        <option value="theft">Theft</option>
+                    </select>
+                    Amount requested: <input type="text" name="requested"><br>
+                    Amount paid: <input type="text" name="paid"><br>
+                    Currency: <input type="text" name="currency"><br>
+                    Latitude: <input type="text" name="lat"><br>
+                    Longitude: <input type="text" name="lng"><br>
+                    Image: <input type="text" name="image_url"><br>
+                    <button class="add_report_submit">Submit</button><br>
+                    <p class="add_report_progress"></p>
                 </div>
             </div>
         </div>
