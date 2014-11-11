@@ -37,7 +37,6 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 		// setup markers
 		$.get('server/web-app_server/get_report.php', function(data) {
 			try {	// works online, fails locally
-				console.log(data);
 				report_data = $.parseJSON(data);
 				report_data.forEach(function(report) {
 					report.location.lat = parseFloat(report.location.lat);
@@ -75,8 +74,11 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 
 		// report submission code
 		$('.add_report_submit').click(function() {
-			$('.add_report_progress').text("Submitting...");
-			var new_report = {
+			var submit_progress,
+				new_report;
+
+			submit_progress = $('.add_report_progress');
+			new_report = {
 				title: $('input[name=title]').val(),
 				description: $('textarea[name=description]').val(),
 				bribe: {
@@ -91,8 +93,9 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 				},
 				image_url: $('input[name=image_url]').val()
 			};
+			submit_progress.text("Submitting...");
 			reports.register(map, new_report, function(response) {
-				$('.add_report_progress').text("Submitted!");
+				submit_progress.text("Submitted!");
 			});
 		});
 	});

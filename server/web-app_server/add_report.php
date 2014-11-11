@@ -27,6 +27,7 @@ $image = (array_key_exists('image_url', $_POST) ?
                 "'" . $_POST['image_url'] . "'" : 'null');
 echo $title . "\n";
 echo $lat . "\n";
+echo $lng . "\n";
 $db = new DaylightDB();
 $result = $db->add_report($title, $description, $category, $requested, $paid, $currency, $lat, $lng, $image);
 if (FALSE == $result) {
