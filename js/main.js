@@ -72,6 +72,7 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			report_list = reports.init(map, report_data);
 		});
 
+		console.log("BEFORE");
 		$('.add_report_submit').click(function() {
 			var new_report = {
 				title: $('input[name=title]').val(),
@@ -87,8 +88,10 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			console.log(new_report);
 			$('.add_report_progress').text("Submitting...");
 			$.post('server/web-app_server/add_report.php', new_report).done(function(response) {
+				console.log(response);
 				$('.add_report_progress').text("Submitted!");
 			});
 		});
+		console.log("AFTER");
 	});
 });
