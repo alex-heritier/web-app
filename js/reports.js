@@ -11,11 +11,12 @@ define(['gmaps'], function(gmaps) {
 
     // Reports represent the report data returned from the server
     Report = function(map, params) {
-        var that = this
+        var that = this,
             date = new Date(Date.now());
+
         this.datetime = {
-            date: params.datetime.date || date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate(),
-            time: params.datetime.time || date.getTime()
+            date: params.datetime ? params.datetime.date : (date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()),
+            time: params.datetime ? params.datetime.time : date.getTime()
         };
         this.title = params.title;
         this.description = params.description;
