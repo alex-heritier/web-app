@@ -90,8 +90,9 @@ define(['gmaps', 'jquery'], function(gmaps, $) {
             .done(function(response) {
                 callback(response);
             })
-            .fail(function() {
-                console.log("Cannot save reports when working locally.");
+            .fail(function(response) {
+                callback(response);
+                console.log("Cannot save reports to the database when working locally.");
             });
     };
 
