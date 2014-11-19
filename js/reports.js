@@ -1,20 +1,22 @@
 'use strict';
 
-define(['gmaps'], function(gmaps) {
+define(['gmaps', 'jquery'], function(gmaps, $) {
     var Report,
         initReports,
+        register,
         reports = [],
         activeMarker = null,
-        infowindow;
+        infowindow,
+        makeWindowContent;
 
     // Reports represent the report data returned from the server
     Report = function(map, params) {
         var that = this,
-            makeWindowContent;
+            date = new Date(Date.now());
 
         this.datetime = {
-            date: params.datetime.date,
-            time: params.datetime.time
+            date: params.datetime ? params.datetime.date : (date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()),
+            time: params.datetime ? params.datetime.time : date.getTime()
         };
         this.title = params.title;
         this.description = params.description;
@@ -35,32 +37,33 @@ define(['gmaps'], function(gmaps) {
             position: this.location
         });
 
-        makeWindowContent = function() {
-            return "<div class='infowindow'>" +
-                "<p class='title'>Title: " + that.title + "</p>" +
-                "<div class='infowindow_left'>" +
-                    "<img src='" + that.image_url + "'>" +
-                "</div>" +
-                "<div class='infowindow_right'>" +
-                    "<p class='category'>Category: " + that.bribe.category + "</p>" +
-                    "<p class='requested'>Amount requested: " + that.bribe.requested + "</p>" +
-                    "<p class='paid'>Amount paid: " + that.bribe.paid + "</p>" +
-                    "<p class='currency'>Currency: " + that.bribe.currency + "</p>" +
-                "</div>" +
-                "<p class='description'>Description: " + that.description + "</p>" +
-            "</div>";
-        };
-
         gmaps.event.addListener(this.marker, 'click', function() {
             infowindow.close();
             if (this !== activeMarker) { // if this marker isn't active
                 activeMarker = this;                 // set to active marker
                 infowindow.open(map, that.marker);   // make active
-                infowindow.setContent(makeWindowContent());
+                infowindow.setContent(makeWindowContent(that));
             } else {
                 activeMarker = null; // leave closed and deactivate
             }
         });
+    };
+
+    // creates infowindow's content
+    makeWindowContent = function(that) {
+        return "<div class='infowindow'>" +
+            "<p class='title'>Title: " + that.title + "</p>" +
+            "<div class='infowindow_left'>" +
+                "<img src='" + that.image_url + "'>" +
+            "</div>" +
+            "<div class='infowindow_right'>" +
+                "<p class='category'>Category: " + that.bribe.category + "</p>" +
+                "<p class='requested'>Amount requested: " + that.bribe.requested + "</p>" +
+                "<p class='paid'>Amount paid: " + that.bribe.paid + "</p>" +
+                "<p class='currency'>Currency: " + that.bribe.currency + "</p>" +
+            "</div>" +
+            "<p class='description'>Description: " + that.description + "</p>" +
+        "</div>";
     };
 
     initReports = function(map, data) {
@@ -81,7 +84,19 @@ define(['gmaps'], function(gmaps) {
         return reports;
     };
 
+    register = function(map, params, callback) {
+        reports.push(new Report(map, params));
+        $.post('server/web-app_server/add_report.php', params)
+            .fail(function(response) {
+                console.log("Cannot save reports to the database when working locally.");
+            })
+            .always(function(response) {
+                callback(response);
+            });
+    };
+
     return {
-        init: initReports
+        init: initReports,
+        register: register
     }
 });

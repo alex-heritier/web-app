@@ -28,15 +28,15 @@ class DaylightDB
 	function query($query)
 	{
 		$result = $this->db->query($query);
-		if (! $result) {
-		   echo "Error code ({$result->errno}): {$result->error}";
+		if (!$result) {
+		   echo "Error code ($result->errno): $result->error";
 		}
 		return $result;
 	}
 
 	function add_report($title, $description, $category, $requested, $paid, $currency, $latitude, $longitude, $image)
 	{
-		$query = "INSERT INTO " . DaylightDB::TABLE_NAME . " (datetime, title, description, category, requested, paid, currency, latitude, longitude, image) VALUES (NOW(), '$title', '$description', '$category', '$requested', '$paid', '$currency', '$latitude', '$longitude', '$image')";
+		$query = "INSERT INTO " . DaylightDB::TABLE_NAME . " (datetime, title, description, category, requested, paid, currency, latitude, longitude, image) VALUES (NOW(), $title, $description, $category, '$requested', '$paid', $currency, '$latitude', '$longitude', $image)";
 		return $this->query($query);
 	}
 

@@ -29,12 +29,41 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 		var map,
 			sidebars,
 			report_data,
-			report_list;
+			report_list,
+			URL_parameters;
 
+		// initialize the canvas as a google map
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
-		sidebars = sb.init();
+		// add the divs to the list of sidebars
+		URL_parameters = document.URL.split(/\/(?=#)/)[1];	// get URL_parameters parameters
+		sidebars = sb.register([
+			{	// about sidebar
+				name: "about",  // the sidebars unique name
+				sidebar: $('.about_sidebar'),   // the sidebar element
+				anchors: $('a[href="#/about"]'),    // the sidebar's link
+				highlights: [$('a[href="#/about"]').parent()],  // the elements that are made active
+				visible: URL_parameters ? URL_parameters === "#/about" : true	// default sidebar
+			},
+			{	// add report sidebar
+				name: "add",
+				sidebar: $('.add_report_sidebar'),
+				anchors: $('a[href="#/add"]'),
+				highlights: [$('a[href="#/add"]').parent(),
+					$('a[href="#/add"]').parent().parent().parent()],
+				visible: URL_parameters === "#/add"
+			},
+			{	// view report sidebar
+				name: "view",
+				sidebar: $('.view_report_sidebar'),
+				anchors: $('a[href="#/view"]'),
+				highlights: [$('a[href="#/view"]').parent(),
+					$('a[href="#/view"]').parent().parent().parent()],
+				visible: URL_parameters === "#/view"
+			}
+		]);
 
-		$.get("server/web-app_server/get_report.php", function(data) {
+		// setup markers
+		$.get('server/web-app_server/get_report.php', function(data) {
 			try {	// works online, fails locally
 				report_data = $.parseJSON(data);
 				report_data.forEach(function(report) {
@@ -67,7 +96,37 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 					});
 				}
 			}
+			// populate map with markers
 			report_list = reports.init(map, report_data);
+		});
+
+		// report submission code
+		$('.add_report_submit').click(function() {
+			var submit_progress,
+				new_report;
+
+			// a div that to display submit progress
+			submit_progress = $('.add_report_progress');
+			// the report to submit to the server
+			new_report = {
+				title: $('input[name=title]').val(),
+				description: $('textarea[name=description]').val(),
+				bribe: {
+					category: $('select[name=category]').val(),
+					requested: $('input[name=requested]').val(),
+					paid: $('input[name=paid]').val(),
+					currency: $('input[name=currency]').val()
+				},
+				location: {
+					lat: parseFloat($('input[name=lat]').val()),
+					lng: parseFloat($('input[name=lng]').val())
+				},
+				image_url: $('input[name=image_url]').val()
+			};
+			submit_progress.text("Submitting...");
+			reports.register(map, new_report, function(response) {
+				submit_progress.text("Submitted!");
+			});
 		});
 	});
 });
