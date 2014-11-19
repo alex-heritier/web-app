@@ -48,6 +48,7 @@ html, body {
     padding: 10px 5px;
 	color: #e3e3e3;
     font-size: 3rem;
+    width: 100%;
 }
 
 .sidebar .content {
@@ -55,14 +56,16 @@ html, body {
     border-radius: 5px;
 }
 
-/* About sidebar starts off visible */
-.about_sidebar {
-    left: 0px;
-    opacity: 1;
-}
-
 .add_report_sidebar .title h1 {
     font-size: 2.7rem;
+}
+
+.add_report_sidebar .description {
+
+}
+
+.add_report_sidebar .content input {
+
 }
 
 .infowindow {

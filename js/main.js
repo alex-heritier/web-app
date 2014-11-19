@@ -29,10 +29,30 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 		var map,
 			sidebars,
 			report_data,
-			report_list;
+			report_list,
+			URL;
 
+		// initialize the canvas as a google map
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
-		sidebars = sb.init();
+		// add the divs to the list of sidebars
+		URL = document.URL.split(/\/(?=#)/)[1];	// get URL parameters
+		sidebars = sb.register([
+			{	// about sidebar
+				name: "about",  // the sidebars unique name
+				sidebar: $('.about_sidebar'),   // the sidebar element
+				anchors: $('a[href="#/about"]'),    // the sidebar's link
+				highlights: [$('a[href="#/about"]').parent()],  // the elements that are made active
+				visible: URL === "#/about"
+			},
+			{	// add report sidebar
+				name: "add",
+				sidebar: $('.add_report_sidebar'),
+				anchors: $('a[href="#/add"]'),
+				highlights: [$('a[href="#/add"]').parent(),
+					$('a[href="#/add"]').parent().parent().parent()],
+				visible: URL === "#/add"
+			}
+		]);
 
 		// setup markers
 		$.get('server/web-app_server/get_report.php', function(data) {
@@ -77,7 +97,9 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			var submit_progress,
 				new_report;
 
+			// a div that to display submit progress
 			submit_progress = $('.add_report_progress');
+			// the report to submit to the server
 			new_report = {
 				title: $('input[name=title]').val(),
 				description: $('textarea[name=description]').val(),

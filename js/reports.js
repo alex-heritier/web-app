@@ -87,12 +87,11 @@ define(['gmaps', 'jquery'], function(gmaps, $) {
     register = function(map, params, callback) {
         reports.push(new Report(map, params));
         $.post('server/web-app_server/add_report.php', params)
-            .done(function(response) {
-                callback(response);
-            })
             .fail(function(response) {
-                callback(response);
                 console.log("Cannot save reports to the database when working locally.");
+            })
+            .always(function(response) {
+                callback(response);
             });
     };
 
