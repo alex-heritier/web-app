@@ -30,19 +30,19 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			sidebars,
 			report_data,
 			report_list,
-			URL;
+			URL_parameters;
 
 		// initialize the canvas as a google map
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
 		// add the divs to the list of sidebars
-		URL = document.URL.split(/\/(?=#)/)[1];	// get URL parameters
+		URL_parameters = document.URL.split(/\/(?=#)/)[1];	// get URL_parameters parameters
 		sidebars = sb.register([
 			{	// about sidebar
 				name: "about",  // the sidebars unique name
 				sidebar: $('.about_sidebar'),   // the sidebar element
 				anchors: $('a[href="#/about"]'),    // the sidebar's link
 				highlights: [$('a[href="#/about"]').parent()],  // the elements that are made active
-				visible: URL === "#/about"
+				visible: URL_parameters ? URL_parameters === "#/about" : true	// default sidebar
 			},
 			{	// add report sidebar
 				name: "add",
@@ -50,7 +50,15 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 				anchors: $('a[href="#/add"]'),
 				highlights: [$('a[href="#/add"]').parent(),
 					$('a[href="#/add"]').parent().parent().parent()],
-				visible: URL === "#/add"
+				visible: URL_parameters === "#/add"
+			},
+			{	// view report sidebar
+				name: "view",
+				sidebar: $('.view_report_sidebar'),
+				anchors: $('a[href="#/view"]'),
+				highlights: [$('a[href="#/view"]').parent(),
+					$('a[href="#/view"]').parent().parent().parent()],
+				visible: URL_parameters === "#/view"
 			}
 		]);
 
