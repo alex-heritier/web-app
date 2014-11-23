@@ -28,9 +28,9 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 	$(document).ready(function() {
 		var map,
 			sidebars,
-			report_data,
 			report_list,
-			URL_parameters;
+			URL_parameters,
+			populateViewSidebar;
 
 		// initialize the canvas as a google map
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
@@ -62,8 +62,24 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			}
 		]);
 
+		// populates the view sidebar with reports
+		populateViewSidebar = function(reports) {
+			var content;
+
+			content = $('.view_report_sidebar .content');
+			reports.forEach(function(report) {
+				content.append('<div class="entry">' +
+					'<span class="entry_title">' + report.title + '</span>' +
+					'<span class="entry_location">' + report.location.lat + 'º, ' + report.location.lng + 'º' + '</span>' +
+					'</div>'
+				);
+			});
+		};
+
 		// setup markers
 		$.get('server/web-app_server/get_report.php', function(data) {
+			var report_data;
+
 			try {	// works online, fails locally
 				report_data = $.parseJSON(data);
 				report_data.forEach(function(report) {
@@ -98,6 +114,7 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			}
 			// populate map with markers
 			report_list = reports.init(map, report_data);
+			populateViewSidebar(report_list);
 		});
 
 		// report submission code
