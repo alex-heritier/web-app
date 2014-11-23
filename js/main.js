@@ -4,12 +4,9 @@ requirejs.config({
 	baseUrl: 'js/',
 	paths: {
 		'jquery': '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
-		'hbs': 'lib/require-handlebars-plugin/hbs',
+		'handlebars': '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min',
 		'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min',
 		'async': 'lib/async'
-	},
-	hbs: {
-		partialsUrl: 'partials'
 	},
 	shim: {
 		'bootstrap': {
@@ -25,15 +22,20 @@ function(){
     return window.google.maps;
 });
 
-require(['jquery', 'maps', 'sidebars', 'reports', 'hbs!partials/report_entry', 'bootstrap'],
-function($, maps, sb, reports, report_entry_template) {
+require(['jquery', 'maps', 'sidebars', 'reports', 'handlebars', 'bootstrap'],
+function($, maps, sb, reports, Handlebars) {
 	$(document).ready(function() {
 		var map,
 			sidebars,
 			report_list,
 			URL_parameters,
-			populateViewSidebar;
+			populateViewSidebar,
+			report_entry_template;
 
+		// get view entry template
+		$.get('partials/report_entry.hbs', function(response) {
+				report_entry_template = Handlebars.compile(response);
+		});
 		// initialize the canvas as a google map
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
 		// add the divs to the list of sidebars
@@ -66,9 +68,7 @@ function($, maps, sb, reports, report_entry_template) {
 
 		// populates the view sidebar with reports
 		populateViewSidebar = function(reports) {
-			var content;
-
-			content = $('.view_report_sidebar .content');
+			var content = $('.view_report_sidebar .content');
 			if ('forEach' in reports) {	// if reports is an array
 				reports.forEach(function(report) {
 					report = report.report_data;

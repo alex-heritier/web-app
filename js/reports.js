@@ -1,12 +1,13 @@
 'use strict';
 
-define(['gmaps', 'jquery', 'hbs!partials/infowindow'], function(gmaps, $, infowindow_template) {
+define(['gmaps', 'jquery', 'handlebars'], function(gmaps, $, Handlebars) {
     var Report,
         initReports,
         register,
         reports = [],
         activeMarker = null,
-        infowindow;
+        infowindow,
+        infowindow_template;
 
     // Reports represent the report data returned from the server
     Report = function(map, params) {
@@ -52,9 +53,15 @@ define(['gmaps', 'jquery', 'hbs!partials/infowindow'], function(gmaps, $, infowi
     };
 
     initReports = function(map, data) {
+        // get infowindow template
+        $.get('partials/infowindow.hbs', function(response) {
+            infowindow_template = Handlebars.compile(response);
+        });
+
         // init infowindow
         infowindow = new gmaps.InfoWindow({
-            maxWidth: 400
+            maxWidth: 400,
+            minWidth: 400
         });
         gmaps.event.addListener(infowindow, 'closeclick', function() {
             activeMarker = null; // deactivate
