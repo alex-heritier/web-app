@@ -1,40 +1,41 @@
 'use strict';
 
-define(['gmaps', 'jquery'], function(gmaps, $) {
+define(['gmaps', 'jquery', 'hbs!partials/infowindow'], function(gmaps, $, infowindow_template) {
     var Report,
         initReports,
         register,
         reports = [],
         activeMarker = null,
-        infowindow,
-        makeWindowContent;
+        infowindow;
 
     // Reports represent the report data returned from the server
     Report = function(map, params) {
         var that = this,
             date = new Date(Date.now());
 
-        this.datetime = {
-            date: params.datetime ? params.datetime.date : (date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()),
-            time: params.datetime ? params.datetime.time : date.getTime()
+        this.report_data = {
+            datetime: {
+                date: params.datetime ? params.datetime.date : (date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()),
+                time: params.datetime ? params.datetime.time : date.getTime()
+            },
+            title: params.title,
+            description: params.description,
+            bribe: {
+                category: params.bribe.category,
+                requested: params.bribe.requested,
+                paid: params.bribe.paid,
+                currency: params.bribe.currency
+            },
+            location: {
+                lat: params.location.lat,
+                lng: params.location.lng
+            },
+            image_url: params.image_url
         };
-        this.title = params.title;
-        this.description = params.description;
-        this.bribe = {
-            category: params.bribe.category,
-            requested: params.bribe.requested,
-            paid: params.bribe.paid,
-            currency: params.bribe.currency
-        };
-        this.location = {
-            lat: params.location.lat,
-            lng: params.location.lng
-        },
-        this.image_url = params.image_url;
         this.marker = new gmaps.Marker({
-            title: this.title || "A Report!",
+            title: this.report_data.title || "A Report!",
             map: map,
-            position: this.location,
+            position: this.report_data.location,
             animation: gmaps.Animation.DROP,
         });
 
@@ -43,28 +44,11 @@ define(['gmaps', 'jquery'], function(gmaps, $) {
             if (this !== activeMarker) { // if this marker isn't active
                 activeMarker = this;                 // set to active marker
                 infowindow.open(map, that.marker);   // make active
-                infowindow.setContent(makeWindowContent(that));
+                infowindow.setContent(infowindow_template(that.report_data));
             } else {
                 activeMarker = null; // leave closed and deactivate
             }
         });
-    };
-
-    // creates infowindow's content
-    makeWindowContent = function(that) {
-        return "<div class='infowindow'>" +
-            "<p class='title'>Title: " + that.title + "</p>" +
-            "<div class='infowindow_left'>" +
-                "<img src='" + that.image_url + "'>" +
-            "</div>" +
-            "<div class='infowindow_right'>" +
-                "<p class='category'>Category: " + that.bribe.category + "</p>" +
-                "<p class='requested'>Amount requested: " + that.bribe.requested + "</p>" +
-                "<p class='paid'>Amount paid: " + that.bribe.paid + "</p>" +
-                "<p class='currency'>Currency: " + that.bribe.currency + "</p>" +
-            "</div>" +
-            "<p class='description'>Description: " + that.description + "</p>" +
-        "</div>";
     };
 
     initReports = function(map, data) {

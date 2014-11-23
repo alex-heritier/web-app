@@ -55,7 +55,6 @@ html, body {
 
 .sidebar .content {
     padding: 5px;
-    border-radius: 5px;
 }
 
 .add_report_sidebar .title h1 {
@@ -64,11 +63,13 @@ html, body {
 
 .view_report_sidebar .content {
     padding: 0;
+    padding-bottom: 60px;   /* the last few reports aren't visible without this */
 }
 
 .view_report_sidebar .entry {
     padding: 5px 0;
     clear: both;
+    height: 30px;
 }
 
 .entry .entry_title {

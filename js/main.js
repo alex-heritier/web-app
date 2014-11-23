@@ -2,18 +2,19 @@
 
 requirejs.config({
 	baseUrl: 'js/',
+	paths: {
+		'jquery': '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
+		'hbs': 'lib/require-handlebars-plugin/hbs',
+		'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min',
+		'async': 'lib/async'
+	},
+	hbs: {
+		partialsUrl: 'partials'
+	},
 	shim: {
 		'bootstrap': {
 			deps: ['jquery']
-		},
-		'jquery_ui': {
-			deps: ['jquery']
 		}
-	},
-	paths: {
-		'jquery': '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
-		'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min',
-		'async': 'lib/async'
 	}
 });
 
@@ -24,7 +25,8 @@ function(){
     return window.google.maps;
 });
 
-require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps, sb, reports) {
+require(['jquery', 'maps', 'sidebars', 'reports', 'hbs!partials/report_entry', 'bootstrap'],
+function($, maps, sb, reports, report_entry_template) {
 	$(document).ready(function() {
 		var map,
 			sidebars,
@@ -67,13 +69,14 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			var content;
 
 			content = $('.view_report_sidebar .content');
-			reports.forEach(function(report) {
-				content.append('<div class="entry">' +
-					'<span class="entry_title">' + report.title + '</span>' +
-					'<span class="entry_location">' + report.location.lat + 'º, ' + report.location.lng + 'º' + '</span>' +
-					'</div>'
-				);
-			});
+			if ('forEach' in reports) {	// if reports is an array
+				reports.forEach(function(report) {
+					report = report.report_data;
+					content.append(report_entry_template(report));
+				});
+			} else {	// else if just a single report
+				content.append(report_entry_template(report));
+			}
 		};
 
 		// setup markers
@@ -143,6 +146,7 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			submit_progress.text("Submitting...");
 			reports.register(map, new_report, function(response) {
 				submit_progress.text("Submitted!");
+				populateViewSidebar(new_report);
 			});
 		});
 	});
