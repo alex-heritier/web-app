@@ -34,7 +34,8 @@ define(['gmaps', 'jquery'], function(gmaps, $) {
         this.marker = new gmaps.Marker({
             title: this.title || "A Report!",
             map: map,
-            position: this.location
+            position: this.location,
+            animation: gmaps.Animation.DROP,
         });
 
         gmaps.event.addListener(this.marker, 'click', function() {
@@ -88,6 +89,7 @@ define(['gmaps', 'jquery'], function(gmaps, $) {
         reports.push(new Report(map, params));
         $.post('server/web-app_server/add_report.php', params)
             .fail(function(response) {
+                //console.log(response);
                 console.log("Cannot save reports to the database when working locally.");
             })
             .always(function(response) {

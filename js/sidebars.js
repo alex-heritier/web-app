@@ -38,6 +38,17 @@ define(function() {
             });
         };
 
+        // initializes the click listener
+        this.anchors.click(function() {
+            // toggle all other active links
+            sidebars.forEach(function(sbar) {
+                if (sbar.visible === true && sbar.name !== that.name) {
+                    sbar.toggle();
+                }
+            });
+            that.toggle();	// toggle the current sidebar
+        });
+
         // determine visibility
         if (this.visible === true) {
             // make the sidebar visible and temporarily remove transitions
@@ -55,18 +66,6 @@ define(function() {
                 transition: 'left 0.3s linear, opacity 0.3s linear'
             });
         }
-
-        // initializes the click listener
-        this.anchors.click(function() {
-            // toggle all other active links
-            sidebars.forEach(function(sbar) {
-                if (sbar.visible === true && sbar.name !== that.name) {
-                    sbar.toggle();
-                }
-            });
-            that.toggle();	// toggle the current sidebar
-        });
-        return this;
     };
 
     // register(): adds a sidebar to Sidebar.sidebars

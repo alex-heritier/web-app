@@ -35,7 +35,7 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 		// initialize the canvas as a google map
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
 		// add the divs to the list of sidebars
-		URL_parameters = document.URL.split(/\/(?=#)/)[1];	// get URL_parameters parameters
+		URL_parameters = document.URL.split(/\/(?=#)/)[1];	// get URL parameters
 		sidebars = sb.register([
 			{	// about sidebar
 				name: "about",  // the sidebars unique name
