@@ -2,18 +2,19 @@
 
 requirejs.config({
 	baseUrl: 'js/',
+	paths: {
+		'jquery': '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
+		'hbs': 'lib/require-handlebars-plugin/hbs',
+		'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min',
+		'async': 'lib/async'
+	},
+	hbs: {
+		partialsUrl: 'partials'
+	},
 	shim: {
 		'bootstrap': {
 			deps: ['jquery']
-		},
-		'jquery_ui': {
-			deps: ['jquery']
 		}
-	},
-	paths: {
-		'jquery': '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
-		'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min',
-		'async': 'lib/async'
 	}
 });
 
@@ -24,18 +25,19 @@ function(){
     return window.google.maps;
 });
 
-require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps, sb, reports) {
+require(['jquery', 'maps', 'sidebars', 'reports', 'hbs!partials/report_entry', 'bootstrap'],
+function($, maps, sb, reports, report_entry_template) {
 	$(document).ready(function() {
 		var map,
 			sidebars,
-			report_data,
 			report_list,
-			URL_parameters;
+			URL_parameters,
+			populateViewSidebar;
 
 		// initialize the canvas as a google map
 		map = maps.init("map_canvas", {lat: 22.5500, lng: 114.1000});
 		// add the divs to the list of sidebars
-		URL_parameters = document.URL.split(/\/(?=#)/)[1];	// get URL_parameters parameters
+		URL_parameters = document.URL.split(/\/(?=#)/)[1];	// get URL parameters
 		sidebars = sb.register([
 			{	// about sidebar
 				name: "about",  // the sidebars unique name
@@ -62,8 +64,25 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			}
 		]);
 
+		// populates the view sidebar with reports
+		populateViewSidebar = function(reports) {
+			var content;
+
+			content = $('.view_report_sidebar .content');
+			if ('forEach' in reports) {	// if reports is an array
+				reports.forEach(function(report) {
+					report = report.report_data;
+					content.append(report_entry_template(report));
+				});
+			} else {	// else if just a single report
+				content.append(report_entry_template(report));
+			}
+		};
+
 		// setup markers
 		$.get('server/web-app_server/get_report.php', function(data) {
+			var report_data;
+
 			try {	// works online, fails locally
 				report_data = $.parseJSON(data);
 				report_data.forEach(function(report) {
@@ -98,6 +117,7 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			}
 			// populate map with markers
 			report_list = reports.init(map, report_data);
+			populateViewSidebar(report_list);
 		});
 
 		// report submission code
@@ -126,6 +146,7 @@ require(['jquery', 'maps', 'sidebars', 'reports', 'bootstrap'], function($, maps
 			submit_progress.text("Submitting...");
 			reports.register(map, new_report, function(response) {
 				submit_progress.text("Submitted!");
+				populateViewSidebar(new_report);
 			});
 		});
 	});

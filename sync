@@ -1,3 +1,0 @@
-#!/bin/sh
-
-sudo rsync --rsync-path="sudo -u alex rsync" —delete -urltv -e "ssh -i /Users/Alex/Desktop/ec2_key_pair.pem" /Users/Alex/Desktop/Work/Daylight_webapp/ ubuntu@54.183.17.118:/home/alex/public_html/

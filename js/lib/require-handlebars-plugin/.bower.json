@@ -1,0 +1,15 @@
+{
+  "name": "require-handlebars-plugin",
+  "homepage": "https://github.com/SlexAxton/require-handlebars-plugin",
+  "version": "0.11.0",
+  "_release": "0.11.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.11.0",
+    "commit": "6140499e610db2ac18472a6b4f3a192c71c0a507"
+  },
+  "_source": "git://github.com/SlexAxton/require-handlebars-plugin.git",
+  "_target": "~0.11.0",
+  "_originalSource": "require-handlebars-plugin",
+  "_direct": true
+}
