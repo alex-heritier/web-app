@@ -64,7 +64,7 @@ define(['gmaps', 'jquery', 'handlebars'], function(gmaps, $, Handlebars) {
             minWidth: 400
         });
         gmaps.event.addListener(infowindow, 'closeclick', function() {
-            activeMarker = null; // deactivate
+            activeMarker = null;
         });
 
         // init reports

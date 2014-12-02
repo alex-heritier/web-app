@@ -32,7 +32,7 @@ function($, maps, sb, reports, Handlebars) {
 			populateViewSidebar,
 			report_entry_template;
 
-		// get view entry template
+		// get report entry template
 		$.get('partials/report_entry.hbs', function(response) {
 				report_entry_template = Handlebars.compile(response);
 		});

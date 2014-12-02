@@ -42,7 +42,7 @@ html, body {
     transition: left 0.3s linear, opacity 0.3s linear;
     color: #999;
     font-size: 1.6rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -55,6 +55,7 @@ html, body {
 
 .sidebar .content {
     padding: 5px;
+    overflow-y: scroll;
 }
 
 .add_report_sidebar .title h1 {
