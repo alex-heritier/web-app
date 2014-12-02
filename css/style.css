@@ -108,3 +108,21 @@ html, body {
 .infowindow .description {
     clear: both;
 }
+
+input, textarea  { 
+    padding: 10px; 
+    border: solid 1px #E5E5E5; 
+    outline: 0; 
+    font: normal 13px/100% sans-serif; 
+    width: 200px; 
+    background: #FFFFFF; 
+    }
+	
+button { 
+    width: auto; 
+    padding: 9px 15px; 
+    background: #969696; 
+    border: 0; 
+    font-size: 14px; 
+    color: #FFFFFF; 
+    }
